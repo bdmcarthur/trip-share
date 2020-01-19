@@ -9,6 +9,7 @@ import Profile from "./Components/Profile";
 import TripForm from "./Components/TripForm";
 import Trip from "./Components/Trip";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import * as TripServices from "./services/trip-services";
 
 class App extends Component {
   constructor() {
@@ -16,16 +17,19 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       user: null,
-      userLoaded: false
+      userLoaded: false,
+      trips: null
     };
   }
 
   componentDidMount = () => {
     this.getUser();
+    this.getTrips();
   };
 
   updateUser = userObject => {
     this.setState(userObject);
+    this.getTrips();
   };
 
   getUser = () => {
@@ -46,6 +50,18 @@ class App extends Component {
         });
       }
     });
+  };
+
+  getTrips = () => {
+    TripServices.getTripsService()
+      .then(trip => {
+        this.setState({
+          trips: trip
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -70,7 +86,7 @@ class App extends Component {
             <ProtectedRoute
               path="/user/:id"
               user={this.state.user}
-              render={props => <Profile user={this.state.user} />}
+              render={props => <Profile {...props} state={this.state} />}
             />
             <ProtectedRoute
               path="/trip/new"

@@ -21,7 +21,8 @@ export const addService = ({
         dateStart
       })
       .then(response => {
-        const trip = response.data.data.plan;
+        const trip = response.data.data.trip;
+
         resolve(trip);
       })
       .catch(error => {
@@ -29,12 +30,24 @@ export const addService = ({
       });
   });
 
-export const getTripsService = user =>
+export const getTripsService = () =>
   new Promise((resolve, reject) => {
     tripAPI
-      .post("/getTrips", user)
+      .post("/getTrips")
       .then(response => {
-        resolve(response.data.data);
+        resolve(response.data.data.trip);
+      })
+      .catch(error => {
+        console.log("Trips", error);
+      });
+  });
+
+export const addPhotosService = (photos, userId) =>
+  new Promise((resolve, reject) => {
+    tripAPI
+      .post(`/trip/${userId}/edit`, { photos })
+      .then(response => {
+        resolve(response.data.data.trip);
       })
       .catch(error => {
         console.log("Trips", error);

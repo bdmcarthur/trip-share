@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import * as TripServices from "../services/trip-services";
+import Dropzone from "react-dropzone";
+import axios from "axios";
 
 export default class TripForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       title: "",
       description: "",
@@ -89,6 +90,7 @@ export default class TripForm extends Component {
               onChange={this.handleChange}
             ></input>
           </div>
+
           <button
             type="submit"
             class="btn btn-danger"
