@@ -54,7 +54,10 @@ class Navbar extends Component {
           {loggedIn ? (
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/about" className="btn btn-link text-secondary">
+                <Link
+                  to={`/user/${user._id}`}
+                  className="btn btn-link text-secondary"
+                >
                   <span className="text-secondary">Profile</span>
                 </Link>
               </li>

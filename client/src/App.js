@@ -8,13 +8,15 @@ import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import TripForm from "./Components/TripForm";
 import Trip from "./Components/Trip";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       loggedIn: false,
-      user: null
+      user: null,
+      userLoaded: false
     };
   }
 
@@ -32,13 +34,15 @@ class App extends Component {
         console.log("Get User: There is a user saved in the server session");
         this.setState({
           loggedIn: true,
-          user: response.data.user
+          user: response.data.user,
+          userLoaded: true
         });
       } else {
         console.log("Get user: no user");
         this.setState({
           loggedIn: false,
-          user: null
+          user: null,
+          userLoaded: true
         });
       }
     });
@@ -52,30 +56,35 @@ class App extends Component {
           user={this.state.user}
           loggedIn={this.state.loggedIn}
         />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route
-            path="/login"
-            render={() => <LoginForm updateUser={this.updateUser} />}
-          />
-          <Route
-            path="/signup"
-            render={() => <Signup updateUser={this.updateUser} />}
-          />
-          <Route
-            path="/user/:id"
-            render={props => <Profile {...props} user={this.state.user} />}
-          />
-          <Route
-            path="/trip/new"
-            exact
-            render={props => <TripForm {...props} user={this.state.user} />}
-          />
-          <Route
-            path="/trip/:id"
-            render={props => <Trip {...props} user={this.state.user} />}
-          />
-        </Switch>
+        {this.state.userLoaded && (
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route
+              path="/login"
+              render={() => <LoginForm updateUser={this.updateUser} />}
+            />
+            <Route
+              path="/signup"
+              render={() => <Signup updateUser={this.updateUser} />}
+            />
+            <ProtectedRoute
+              path="/user/:id"
+              user={this.state.user}
+              render={props => <Profile user={this.state.user} />}
+            />
+            <ProtectedRoute
+              path="/trip/new"
+              exact
+              user={this.state.user}
+              render={props => <TripForm {...props} user={this.state.user} />}
+            />
+            <ProtectedRoute
+              path="/trip/:id"
+              user={this.state.user}
+              render={props => <Trip {...props} user={this.state.user} />}
+            />
+          </Switch>
+        )}
       </BrowserRouter>
     );
   }
