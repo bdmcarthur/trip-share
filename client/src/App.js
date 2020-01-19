@@ -8,6 +8,7 @@ import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import TripForm from "./Components/TripForm";
 import Trip from "./Components/Trip";
+import AddPhoto from "./Components/AddPhoto";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import * as TripServices from "./services/trip-services";
 
@@ -93,6 +94,11 @@ class App extends Component {
               exact
               user={this.state.user}
               render={props => <TripForm {...props} user={this.state.user} />}
+            />
+            <ProtectedRoute
+              path="/trip/:id/edit"
+              user={this.state.user}
+              render={props => <AddPhoto {...props} user={this.state.user} />}
             />
             <ProtectedRoute
               path="/trip/:id"

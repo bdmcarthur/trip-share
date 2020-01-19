@@ -16,7 +16,8 @@ const TripSchema = new Schema(
     },
     imageUrl: [
       {
-        image: String
+        image: String,
+        description: String
       }
     ],
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

@@ -21,9 +21,20 @@ router.post("/add", (req, res, next) => {
     });
 });
 
-router.post("/getTrips", (req, res, next) => {
+router.get("/getTrips", (req, res, next) => {
   let user = req.user;
   Trip.find({ user: user })
+    .then(trip => {
+      res.json({ type: "success", data: { trip } });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.get("/:id", (req, res, next) => {
+  let user = req.user;
+  Trip.find({ _id: req.params.id })
     .then(trip => {
       res.json({ type: "success", data: { trip } });
     })
@@ -43,7 +54,7 @@ router.get("/loadTrip/:id", (req, res, next) => {
     });
 });
 
-router.post("/trip/:id/edit", (req, res, next) => {
+router.post("/:id/edit", (req, res, next) => {
   let id = req.params.id;
   let imageUrl = req.body.photos;
   console.log(id, imageUrl);
@@ -54,11 +65,11 @@ router.post("/trip/:id/edit", (req, res, next) => {
   )
     .then(item => {
       console.log(item);
-      // if (item) {
-      //   res.json({ type: "success", data: { item } });
-      // } else {
-      //   next(new Error("POST_COULD_NOT_BE_EDITED"));
-      // }
+      if (item) {
+        res.json({ type: "success", data: { item } });
+      } else {
+        next(new Error("POST_COULD_NOT_BE_EDITED"));
+      }
     })
     .catch(error => {
       next(error);

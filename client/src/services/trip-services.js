@@ -33,7 +33,7 @@ export const addService = ({
 export const getTripsService = () =>
   new Promise((resolve, reject) => {
     tripAPI
-      .post("/getTrips")
+      .get("/getTrips")
       .then(response => {
         resolve(response.data.data.trip);
       })
@@ -42,12 +42,24 @@ export const getTripsService = () =>
       });
   });
 
-export const addPhotosService = (photos, userId) =>
+export const addPhotosService = (photos, tripId) =>
   new Promise((resolve, reject) => {
     tripAPI
-      .post(`/trip/${userId}/edit`, { photos })
+      .post(`/${tripId}/edit`, { photos })
       .then(response => {
         resolve(response.data.data.trip);
+      })
+      .catch(error => {
+        console.log("Trips", error);
+      });
+  });
+
+export const loadTripService = tripId =>
+  new Promise((resolve, reject) => {
+    tripAPI
+      .get(`/${tripId}`)
+      .then(response => {
+        resolve(response.data.data.trip[0]);
       })
       .catch(error => {
         console.log("Trips", error);
