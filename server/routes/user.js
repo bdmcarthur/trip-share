@@ -17,7 +17,8 @@ router.post("/signup", (req, res) => {
       const newUser = new User({
         username: username,
         password: password,
-        name: name
+        name: name,
+        followedTrips: []
       });
       newUser.save((err, savedUser) => {
         if (err) return res.json(err);
@@ -44,7 +45,6 @@ router.post(
 );
 
 router.get("/", (req, res, next) => {
-  console.log("===== user!!======");
   if (req.user) {
     res.json({ user: req.user });
   } else {

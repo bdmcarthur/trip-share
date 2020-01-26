@@ -4,10 +4,6 @@ import "../App.css";
 import * as AuthenticationServices from "../services/auth-services";
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   logout = event => {
     event.preventDefault();
     AuthenticationServices.logOutService()

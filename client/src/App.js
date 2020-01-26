@@ -13,8 +13,8 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import * as TripServices from "./services/trip-services";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loggedIn: false,
       user: null,
@@ -66,6 +66,19 @@ class App extends Component {
   };
 
   render() {
+    // const PrivateRoute = ({ component: Component, ...rest }) => (
+    //   <Route
+    //     {...rest}
+    //     render={props =>
+    //       this.state.user.followedTrips.includes() ? (
+    //         <Component {...props} />
+    //       ) : (
+    //         <Redirect to="/login" />
+    //       )
+    //     }
+    //   />
+    // );
+
     return (
       <BrowserRouter>
         <Navbar

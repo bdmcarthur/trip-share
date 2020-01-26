@@ -119,7 +119,7 @@ class AddPhoto extends Component {
             <div class="row">
               {this.state.imageUrl.map((trip, index) => (
                 <div class="col-lg-4">
-                  <img class="w-100" src={trip.image}></img>
+                  <img class="w-100" alt="trip" src={trip.image}></img>
 
                   <textarea
                     rows="4"

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as TripServices from "../services/trip-services";
 import { Link } from "react-router-dom";
-import { EmailShareButton, EmailIcon } from "react-share";
+import { EmailShareButton } from "react-share";
 
 class AddPhoto extends Component {
   constructor(props) {
@@ -9,7 +9,8 @@ class AddPhoto extends Component {
     this.state = {
       trip: [],
       imageUrl: [],
-      imageStatus: ""
+      imageStatus: "",
+      isOwner: false
     };
   }
 
@@ -20,8 +21,13 @@ class AddPhoto extends Component {
   loadTrip = () => {
     TripServices.loadTripService(this.props.match.params.id)
       .then(trip => {
+        let isOwner = false;
+        if (trip.user === this.props.user._id) {
+          isOwner = true;
+        }
         this.setState({
-          trip: trip
+          trip: trip,
+          isOwner: isOwner
         });
       })
       .catch(error => {
@@ -31,34 +37,40 @@ class AddPhoto extends Component {
 
   render() {
     let trip = this.state.trip;
+    let followedTrips = this.props.user.followedTrips || [];
 
     return (
       <div className="container text-center mb-5">
-        {trip && (
+        {this.state.isOwner === true ||
+        followedTrips.includes(this.state.trip._id) ? (
           <div>
             <h1 className="mt-4">{trip.title}</h1>
-            <Link
-              to={`/trip/${trip._id}/edit`}
-              className="btn btn-success my-4 mx-3"
-            >
-              Add New Photos
-            </Link>
-            <EmailShareButton
-              url={`http://localhost:3000/trip/${trip._id}`}
-              subject={trip.title}
-              body={`Follow me on my trip!`}
-            >
-              <div className="btn btn-success my-4 mx-3 text-white">
-                Share <i class="ml-2 fa fa-envelope"></i>
+            {this.state.isOwner === true && (
+              <div>
+                <Link
+                  to={`/trip/${trip._id}/edit`}
+                  className="btn btn-success my-4 mx-3"
+                >
+                  Add New Photos
+                </Link>
+                <EmailShareButton
+                  url={`http://localhost:3000/trip/${trip._id}`}
+                  subject={trip.title}
+                  body={`Follow me on my trip!`}
+                >
+                  <div className="btn btn-success my-4 mx-3 text-white">
+                    Share <i class="ml-2 fa fa-envelope"></i>
+                  </div>
+                  {/* <EmailIcon round={true} /> */}
+                </EmailShareButton>
               </div>
-              {/* <EmailIcon round={true} /> */}
-            </EmailShareButton>
+            )}
             <div class="container">
               {trip.imageUrl && (
                 <div class="row">
                   {trip.imageUrl.map(trip => (
                     <div class="col-lg-4">
-                      <img class="w-100" src={trip.image}></img>
+                      <img class="w-100" alt="trip" src={trip.image}></img>
                       <p>{trip.description}</p>
                     </div>
                   ))}
@@ -66,6 +78,8 @@ class AddPhoto extends Component {
               )}
             </div>
           </div>
+        ) : (
+          <h1>Not Authorized</h1>
         )}
       </div>
     );

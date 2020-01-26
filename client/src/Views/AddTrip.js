@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import * as TripServices from "../services/trip-services";
-import Dropzone from "react-dropzone";
-import axios from "axios";
 
 export default class TripForm extends Component {
   constructor(props) {
