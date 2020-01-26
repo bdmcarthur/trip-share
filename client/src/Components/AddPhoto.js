@@ -45,7 +45,7 @@ class AddPhoto extends Component {
       this.props.match.params.id
     )
       .then(trip => {
-        console.log(trip);
+        this.props.history.push(`/trip/${this.state.trip._id}`);
       })
       .catch(error => {
         console.log(error);
@@ -113,30 +113,18 @@ class AddPhoto extends Component {
             </div>
           )}
         </Dropzone>
-        <button type="submit" onClick={this.addPhotos}>
-          Add
-        </button>
+
         <div class="container">
-          {/* {trip.imageUrl && (
-            <div class="row">
-              {trip.imageUrl.map(trip => (
-                <div class="col-lg-4">
-                  <img class="w-100" src={trip.image}></img>
-                  <textarea
-                    onChange={e => {
-                      this.addDescription(e, trip._id);
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          )} */}
           {trip.imageUrl && (
             <div class="row">
               {this.state.imageUrl.map((trip, index) => (
                 <div class="col-lg-4">
                   <img class="w-100" src={trip.image}></img>
+
                   <textarea
+                    rows="4"
+                    className="w-100"
+                    placeholder="Add a description"
                     onChange={e => {
                       this.addDescription(e, index);
                     }}
@@ -144,6 +132,15 @@ class AddPhoto extends Component {
                 </div>
               ))}
             </div>
+          )}
+          {this.state.imageUrl.length > 0 && (
+            <button
+              class="btn btn-lg btn-success d-block mx-auto"
+              type="submit"
+              onClick={this.addPhotos}
+            >
+              Add To Trip
+            </button>
           )}
         </div>
       </div>

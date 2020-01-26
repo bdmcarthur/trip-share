@@ -5,9 +5,9 @@ import Signup from "./Components/Signup";
 import LoginForm from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
-import Profile from "./Components/Profile";
-import TripForm from "./Components/TripForm";
-import Trip from "./Components/Trip";
+import Profile from "./Views/Profile";
+import AddTripForm from "./Views/AddTrip";
+import Trip from "./Views/Trip";
 import AddPhoto from "./Components/AddPhoto";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import * as TripServices from "./services/trip-services";
@@ -93,7 +93,9 @@ class App extends Component {
               path="/trip/new"
               exact
               user={this.state.user}
-              render={props => <TripForm {...props} user={this.state.user} />}
+              render={props => (
+                <AddTripForm {...props} user={this.state.user} />
+              )}
             />
             <ProtectedRoute
               path="/trip/:id/edit"
