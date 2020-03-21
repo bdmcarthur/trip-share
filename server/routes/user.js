@@ -22,7 +22,7 @@ router.post("/signup", (req, res) => {
       });
       newUser.save((err, savedUser) => {
         if (err) return res.json(err);
-        req.login(savedUser, function(err) {
+        req.login(savedUser, function (err) {
           if (err) {
             console.log(err);
           }
@@ -35,7 +35,7 @@ router.post("/signup", (req, res) => {
 
 router.post(
   "/login",
-  function(req, res, next) {
+  function (req, res, next) {
     next();
   },
   passport.authenticate("local"),
@@ -60,5 +60,23 @@ router.post("/logout", (req, res) => {
     res.send({ msg: "no user to log out" });
   }
 });
+
+router.post("/addFriendTrip", (req, res, next) => {
+  let tripID = req.body.tripID;
+  let userID = req.user._id;
+
+  console.log('here', tripID, userID)
+  User.findOneAndUpdate(
+    { _id: userID },
+    { $push: { followedTrips: tripID } }, { new: true }
+  )
+    .then(item => {
+      res.send({ msg: "Trip Added" });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
 
 module.exports = router;

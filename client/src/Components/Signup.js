@@ -3,14 +3,15 @@ import { Redirect } from "react-router-dom";
 import * as AuthenticationServices from "../services/auth-services";
 
 class Signup extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
       confirmPassword: "",
       name: "",
-      redirectTo: null
+      redirectTo: null,
+      tripID: this.props.match.params.tripID || null
     };
   }
 
@@ -33,14 +34,33 @@ class Signup extends Component {
           loggedIn: true,
           user: user
         });
-        this.setState({
-          redirectTo: "/"
-        });
+        if (this.state.tripID != null) {
+          this.addTrip()
+        }
+        else {
+          this.setState({
+            redirectTo: "/"
+          });
+        }
       })
       .catch(error => {
         console.log(error);
       });
   };
+
+  addTrip = () => {
+    const { tripID } = this.state;
+    AuthenticationServices.addTripService({
+      tripID
+    }).then(user => {
+      this.setState({
+        redirectTo: "/"
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+
+  }
 
   render() {
     if (this.state.redirectTo) {

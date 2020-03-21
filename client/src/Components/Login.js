@@ -3,12 +3,13 @@ import { Redirect } from "react-router-dom";
 import * as AuthenticationServices from "../services/auth-services";
 
 class LoginForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
-      redirectTo: null
+      redirectTo: null,
+      tripID: this.props.match.params.tripID || null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -32,16 +33,38 @@ class LoginForm extends Component {
           loggedIn: true,
           user: user
         });
-        this.setState({
-          redirectTo: "/"
-        });
+        if (this.state.tripID != null) {
+          console.log('here first')
+          this.addTrip()
+        }
+        else {
+          this.setState({
+            redirectTo: "/"
+          });
+        }
       })
       .catch(error => {
         console.log(error);
       });
   }
 
+  addTrip = () => {
+    console.log('herre')
+    const { tripID } = this.state;
+    AuthenticationServices.addTripService({
+      tripID
+    }).then(user => {
+      this.setState({
+        redirectTo: "/"
+      });
+      console.log('2', this.state.redirectTo)
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
   render() {
+    console.log('1', this.props.match.params.tripID, this.state.redirectTo)
     if (this.state.redirectTo) {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {

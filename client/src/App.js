@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from "axios";
 import Signup from "./Components/Signup";
-import LoginForm from "./Components/Login";
+import Login from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
 import Profile from "./Views/Profile";
@@ -90,12 +90,22 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route
+              exact
               path="/login"
-              render={() => <LoginForm updateUser={this.updateUser} />}
+              render={props => <Login {...props} updateUser={this.updateUser} />}
             />
             <Route
+              exact
               path="/signup"
-              render={() => <Signup updateUser={this.updateUser} />}
+              render={props => <Signup {...props} updateUser={this.updateUser} />}
+            />
+            <Route
+              path="/friend/login/:tripID"
+              render={props => <Login {...props} updateUser={this.updateUser} />}
+            />
+            <Route
+              path="/friend/signup/:tripID"
+              render={props => <Signup {...props} updateUser={this.updateUser} />}
             />
             <ProtectedRoute
               path="/user/:id"

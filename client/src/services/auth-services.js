@@ -45,3 +45,16 @@ export const logOutService = () =>
         reject(error);
       });
   });
+
+export const addTripService = ({ tripID }) =>
+  new Promise((resolve, reject) => {
+    authAPI
+      .post("/user/addFriendTrip", { tripID })
+      .then(response => {
+        console.log('response', response)
+        resolve(response);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
