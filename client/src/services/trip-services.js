@@ -33,12 +33,25 @@ export const addService = ({
 export const getTripsService = () =>
   new Promise((resolve, reject) => {
     tripAPI
-      .get("/getTrips")
+      .get("/getUserTrips")
       .then(response => {
         resolve(response.data.data.trip);
       })
       .catch(error => {
-        console.log("Trips", error);
+        console.log("User Trips", error);
+      });
+  });
+
+export const getFriendsTripsService = () =>
+  new Promise((resolve, reject) => {
+    tripAPI
+      .get("/getFriendsTrips")
+      .then(response => {
+        console.log(response.data.data.items.followedTrips)
+        resolve(response);
+      })
+      .catch(error => {
+        console.log("Friends Trips", error);
       });
   });
 

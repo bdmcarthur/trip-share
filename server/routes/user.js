@@ -65,7 +65,6 @@ router.post("/addFriendTrip", (req, res, next) => {
   let tripID = req.body.tripID;
   let userID = req.user._id;
 
-  console.log('here', tripID, userID)
   User.findOneAndUpdate(
     { _id: userID },
     { $push: { followedTrips: tripID } }, { new: true }

@@ -88,7 +88,12 @@ class App extends Component {
         />
         {this.state.userLoaded && (
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/"
+              user={this.state.user}
+              render={props => <Home {...props} user={this.state.user} />}
+            />
             <Route
               exact
               path="/login"

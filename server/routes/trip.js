@@ -11,7 +11,8 @@ router.post("/add", (req, res, next) => {
     imageUrl,
     dateEnd,
     dateStart,
-    user: req.user
+    user: req.user,
+    imageUploadTime: Date.now()
   })
     .then(trip => {
       res.json({ type: "success", data: { trip } });
@@ -21,8 +22,8 @@ router.post("/add", (req, res, next) => {
     });
 });
 
-router.get("/getTrips", (req, res, next) => {
-  let user = req.user;
+router.get("/getUserTrips", (req, res, next) => {
+  let user = req.user._id;
   Trip.find({ user: user })
     .then(trip => {
       res.json({ type: "success", data: { trip } });
@@ -31,6 +32,19 @@ router.get("/getTrips", (req, res, next) => {
       next(error);
     });
 });
+
+router.get("/getFriendsTrips", (req, res, next) => {
+  let user = req.user._id;
+  User.findOne({ _id: user })
+    .populate("followedTrips")
+    .then(items => {
+      res.json({ type: "success", data: { items } });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
 
 router.get("/:id", (req, res, next) => {
   let user = req.user;
@@ -57,11 +71,11 @@ router.get("/loadTrip/:id", (req, res, next) => {
 router.post("/:id/edit", (req, res, next) => {
   let id = req.params.id;
   let imageUrl = req.body.photos;
-  console.log(id, imageUrl);
+
   Trip.findOneAndUpdate(
     { _id: id },
-    { ...(imageUrl && { imageUrl }) },
-    { new: true }
+    { $push: { imageUrl: imageUrl } },
+    { imageUploadTime: Date.now() }
   )
     .then(item => {
       console.log(item);

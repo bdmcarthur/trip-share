@@ -20,6 +20,9 @@ const TripSchema = new Schema(
         description: String
       }
     ],
+    imageUploadTime: {
+      type: Date
+    },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     location: {
       type: Object

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Feed from "./Feed"
 
-const Home = () => {
+const Home = (props) => {
   return (
     <div className="container text-center mt-4">
       <h1>Trip Share</h1>
@@ -12,7 +13,8 @@ const Home = () => {
       <Link to="/trip/new" className="btn btn-danger">
         Add New Trip
       </Link>
-    </div>
+      <Feed user={props.user}></Feed>
+    </div >
   );
 };
 
