@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-const protectedRouteTrip = ({
+const protectedRouteCity = ({
   user,
   render,
   component: ViewComponent,
@@ -28,4 +28,4 @@ const protectedRouteTrip = ({
     />
   );
 };
-export default protectedRouteTrip;
+export default protectedRouteCity;

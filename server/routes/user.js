@@ -70,7 +70,7 @@ router.post("/addFriendTrip", (req, res, next) => {
     { $push: { followedTrips: tripID } }, { new: true }
   )
     .then(item => {
-      res.send({ msg: "Trip Added" });
+      res.send({ msg: "City Added" });
     })
     .catch(error => {
       next(error);

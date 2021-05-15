@@ -6,11 +6,12 @@ import Login from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
 import Profile from "./Views/Profile";
-import AddTripForm from "./Views/AddTrip";
-import Trip from "./Views/Trip";
+import AddCityForm from "./Views/AddCity";
+import City from "./Views/City";
+import Cities from "./Views/Cities";
 import AddPhoto from "./Components/AddPhoto";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import * as TripServices from "./services/trip-services";
+import * as CityServices from "./services/city-services";
 
 class App extends Component {
   constructor(props) {
@@ -18,19 +19,16 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       user: null,
-      userLoaded: false,
-      trips: null
+      userLoaded: false
     };
   }
 
   componentDidMount = () => {
     this.getUser();
-    this.getTrips();
   };
 
   updateUser = userObject => {
     this.setState(userObject);
-    this.getTrips();
   };
 
   getUser = () => {
@@ -53,24 +51,12 @@ class App extends Component {
     });
   };
 
-  getTrips = () => {
-    TripServices.getTripsService()
-      .then(trip => {
-        this.setState({
-          trips: trip
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   render() {
     // const PrivateRoute = ({ component: Component, ...rest }) => (
     //   <Route
     //     {...rest}
     //     render={props =>
-    //       this.state.user.followedTrips.includes() ? (
+    //       this.state.user.followedCities.includes() ? (
     //         <Component {...props} />
     //       ) : (
     //         <Redirect to="/login" />
@@ -104,37 +90,35 @@ class App extends Component {
               path="/signup"
               render={props => <Signup {...props} updateUser={this.updateUser} />}
             />
-            <Route
-              path="/friend/login/:tripID"
-              render={props => <Login {...props} updateUser={this.updateUser} />}
-            />
-            <Route
-              path="/friend/signup/:tripID"
-              render={props => <Signup {...props} updateUser={this.updateUser} />}
-            />
             <ProtectedRoute
               path="/user/:id"
               user={this.state.user}
               render={props => <Profile {...props} state={this.state} />}
             />
             <ProtectedRoute
-              path="/trip/new"
+              path="/cities"
+              user={this.state.user}
+              render={props => <Cities {...props} state={this.state} />}
+            />
+            <ProtectedRoute
+              path="/city/new"
               exact
               user={this.state.user}
               render={props => (
-                <AddTripForm {...props} user={this.state.user} />
+                <AddCityForm {...props} user={this.state.user} />
               )}
             />
             <ProtectedRoute
-              path="/trip/:id/edit"
+              path="/city/:title/edit"
               user={this.state.user}
               render={props => <AddPhoto {...props} user={this.state.user} />}
             />
             <ProtectedRoute
-              path="/trip/:id"
+              path="/city/:title"
               user={this.state.user}
-              render={props => <Trip {...props} user={this.state.user} />}
+              render={props => <City {...props} user={this.state.user} />}
             />
+
           </Switch>
         )}
       </BrowserRouter>

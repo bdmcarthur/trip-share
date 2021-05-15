@@ -8,12 +8,12 @@ const userSchema = new Schema({
   username: { type: String, unique: true, required: true },
   name: { type: String, unique: false, required: true },
   password: { type: String, unique: false, required: true },
-  followedTrips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Trip" }]
+  followedTrips: [{ type: mongoose.Schema.Types.ObjectId, ref: "City" }]
 });
 
 // Define schema methods
 userSchema.methods = {
-  checkPassword: function(inputPassword) {
+  checkPassword: function (inputPassword) {
     return bcrypt.compareSync(inputPassword, this.password);
   },
   hashPassword: plainTextPassword => {
@@ -22,7 +22,7 @@ userSchema.methods = {
 };
 
 // Define hooks for pre-saving
-userSchema.pre("save", function(next) {
+userSchema.pre("save", function (next) {
   if (!this.password) {
     console.log("models/user.js =======NO PASSWORD PROVIDED=======");
     next();

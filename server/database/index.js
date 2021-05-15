@@ -1,10 +1,11 @@
 //Connect to Mongo database
+require("dotenv").config();
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 //your local database url
 //27017 is the default mongoDB port
-const uri = "mongodb://localhost:27017/trip-share";
+const uri = process.env.CDB_CONNECTION;
 const mongooseConnectionOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,

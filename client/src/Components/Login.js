@@ -9,7 +9,7 @@ class LoginForm extends Component {
       username: "",
       password: "",
       redirectTo: null,
-      tripID: this.props.match.params.tripID || null
+      cityID: this.props.match.params.cityID || null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -33,9 +33,9 @@ class LoginForm extends Component {
           loggedIn: true,
           user: user
         });
-        if (this.state.tripID != null) {
-          console.log('here first')
-          this.addTrip()
+        if (this.state.cityID != null) {
+
+          this.addCity()
         }
         else {
           this.setState({
@@ -48,23 +48,23 @@ class LoginForm extends Component {
       });
   }
 
-  addTrip = () => {
-    console.log('herre')
-    const { tripID } = this.state;
-    AuthenticationServices.addTripService({
-      tripID
+  addCity = () => {
+
+    const { cityID } = this.state;
+    AuthenticationServices.addCityService({
+      cityID
     }).then(user => {
       this.setState({
         redirectTo: "/"
       });
-      console.log('2', this.state.redirectTo)
+
     }).catch(error => {
       console.log(error);
     });
   }
 
   render() {
-    console.log('1', this.props.match.params.tripID, this.state.redirectTo)
+    console.log('1', this.props.match.params.cityID, this.state.redirectTo)
     if (this.state.redirectTo) {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {

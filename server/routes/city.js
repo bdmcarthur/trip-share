@@ -1,42 +1,41 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../database/models/user");
-const Trip = require("../database/models/trip");
-
+const City = require("../database/models/city");
+const Post = require("../database/models/post");
+const preview = require("link-preview-js");
 router.post("/add", (req, res, next) => {
-  const { title, description, imageUrl, dateEnd, dateStart } = req.body;
-  Trip.create({
+  console.log("Adding new city " + JSON.stringify(req.body))
+  const { title, description, imageUrl } = req.body;
+  City.create({
     title,
     description,
     imageUrl,
-    dateEnd,
-    dateStart,
-    user: req.user,
-    imageUploadTime: Date.now()
+    user: req.user
   })
-    .then(trip => {
-      res.json({ type: "success", data: { trip } });
+    .then(city => {
+      res.json({ type: "success", data: { city } });
     })
     .catch(error => {
       next(error);
     });
 });
 
-router.get("/getUserTrips", (req, res, next) => {
+router.get("/getUserCities", (req, res, next) => {
   let user = req.user._id;
-  Trip.find({ user: user })
-    .then(trip => {
-      res.json({ type: "success", data: { trip } });
+  City.find({ user: user })
+    .then(city => {
+      res.json({ type: "success", data: { city } });
     })
     .catch(error => {
       next(error);
     });
 });
 
-router.get("/getFriendsTrips", (req, res, next) => {
+router.get("/getFriendsCities", (req, res, next) => {
   let user = req.user._id;
   User.findOne({ _id: user })
-    .populate("followedTrips")
+    .populate("followedCities")
     .then(items => {
       res.json({ type: "success", data: { items } });
     })
@@ -46,22 +45,24 @@ router.get("/getFriendsTrips", (req, res, next) => {
 });
 
 
-router.get("/:id", (req, res, next) => {
+router.get("/:title", (req, res, next) => {
   let user = req.user;
-  Trip.find({ _id: req.params.id })
-    .then(trip => {
-      res.json({ type: "success", data: { trip } });
+  City.find({ title: req.params.title })
+    .then(city => {
+      res.json({ type: "success", data: { city } });
     })
     .catch(error => {
       next(error);
     });
 });
 
+
+
 router.get("/loadTrip/:id", (req, res, next) => {
-  Trip.find({ _id: req.params.id })
+  City.find({ _id: req.params.id })
     .populate("user")
-    .then(trip => {
-      res.json({ type: "success", data: { trip } });
+    .then(city => {
+      res.json({ type: "success", data: { city } });
     })
     .catch(error => {
       next(error);
@@ -72,13 +73,12 @@ router.post("/:id/edit", (req, res, next) => {
   let id = req.params.id;
   let imageUrl = req.body.photos;
 
-  Trip.findOneAndUpdate(
+  City.findOneAndUpdate(
     { _id: id },
-    { $push: { imageUrl: imageUrl } },
-    { imageUploadTime: Date.now() }
+    { $push: { imageUrl: imageUrl } }
   )
     .then(item => {
-      console.log(item);
+
       if (item) {
         res.json({ type: "success", data: { item } });
       } else {
@@ -89,5 +89,6 @@ router.post("/:id/edit", (req, res, next) => {
       next(error);
     });
 });
+
 
 module.exports = router;

@@ -1,27 +1,27 @@
 import React, { Component } from "react";
 import Dropzone from "react-dropzone";
 import axios from "axios";
-import * as TripServices from "../services/trip-services";
+import * as CityServices from "../services/city-services";
 
 class AddPhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trip: [],
+      city: [],
       imageUrl: [],
       imageStatus: ""
     };
   }
 
   componentDidMount = () => {
-    this.loadTrip();
+    this.loadCity();
   };
 
-  loadTrip = () => {
-    TripServices.loadTripService(this.props.match.params.id)
-      .then(trip => {
+  loadCity = () => {
+    CityServices.loadCityService(this.props.match.params.id)
+      .then(city => {
         this.setState({
-          trip: trip
+          city: city
         });
       })
       .catch(error => {
@@ -33,19 +33,21 @@ class AddPhoto extends Component {
     let state = [...this.state.imageUrl];
     let description = state[i];
     description["description"] = e.target.value;
+    let imageUploadTime = 'Date.now()'
+    imageUploadTime["imageUploadTime"] = Date.now();
     this.setState({
-      imageUrl: state,
-      test: [...new Set(this.state.imageUrl, this.state.trip.imageUrl)]
+      imageUrl: state
+      // test: [...new Set(this.state.imageUrl, this.state.city.imageUrl)]
     });
   };
 
   addPhotos = () => {
-    TripServices.addPhotosService(
-      this.state.imageUrl.concat(this.state.trip.imageUrl),
+    CityServices.addPhotosService(
+      this.state.imageUrl.concat(this.state.city.imageUrl),
       this.props.match.params.id
     )
-      .then(trip => {
-        this.props.history.push(`/trip/${this.state.trip._id}`);
+      .then(city => {
+        this.props.history.push(`/city/${this.state.city._id}`);
       })
       .catch(error => {
         console.log(error);
@@ -96,11 +98,11 @@ class AddPhoto extends Component {
     });
   };
   render() {
-    let trip = this.state.trip;
+    let city = this.state.city;
 
     return (
       <div className="container">
-        <h1 className="text-center">Your Trip</h1>
+        <h1 className="text-center">Your City</h1>
         <Dropzone onDrop={this.handleUploadImages}>
           {({ getRootProps, getInputProps }) => (
             <div {...getRootProps()}>
@@ -115,11 +117,11 @@ class AddPhoto extends Component {
         </Dropzone>
 
         <div class="container">
-          {trip.imageUrl && (
+          {city.imageUrl && (
             <div class="row">
-              {this.state.imageUrl.map((trip, index) => (
+              {this.state.imageUrl.map((city, index) => (
                 <div class="col-lg-4">
-                  <img class="w-100" alt="trip" src={trip.image}></img>
+                  <img class="w-100" alt="city" src={city.image}></img>
 
                   <textarea
                     rows="4"
@@ -139,7 +141,7 @@ class AddPhoto extends Component {
               type="submit"
               onClick={this.addPhotos}
             >
-              Add To Trip
+              Add To City
             </button>
           )}
         </div>

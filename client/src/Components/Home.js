@@ -1,21 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Feed from "./Feed"
+import React, { Component } from "react";
+import anime from 'animejs/lib/anime.es.js';
+import logoDate from './2022.png';
 
-const Home = (props) => {
-  return (
-    <div className="container text-center mt-4">
-      <h1>Trip Share</h1>
-      <p>
-        Privately share your pictures and experiences with your friends and
-        family
-      </p>
-      <Link to="/trip/new" className="btn btn-danger">
-        Add New Trip
-      </Link>
-      <Feed user={props.user}></Feed>
-    </div >
-  );
-};
+export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
-export default Home;
+    };
+  }
+
+  componentDidMount = () => {
+    anime.timeline({ loop: false })
+      .add({
+        targets: '.logo .word',
+        scale: [14, 1],
+        opacity: [0, 1],
+        easing: 'cubicBezier(.5, .05, .1, .3)',
+        duration: 300,
+        delay: (el, i) => 300 * i
+      })
+  }
+
+  render() {
+
+    return (
+      <div className="text-left p-4 logo">
+        <h1 class='logo1 word'>Brandy's</h1>
+        <h1 class='logo2 word'>Remote</h1>
+        <h1 class='logo3 word'>Year</h1>
+      </div>
+    )
+  }
+}

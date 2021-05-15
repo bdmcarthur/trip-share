@@ -46,10 +46,10 @@ export const logOutService = () =>
       });
   });
 
-export const addTripService = ({ tripID }) =>
+export const addCityService = ({ CityID }) =>
   new Promise((resolve, reject) => {
     authAPI
-      .post("/user/addFriendTrip", { tripID })
+      .post("/user/addFriendCity", { CityID })
       .then(response => {
         console.log('response', response)
         resolve(response);

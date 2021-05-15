@@ -11,7 +11,7 @@ class Signup extends Component {
       confirmPassword: "",
       name: "",
       redirectTo: null,
-      tripID: this.props.match.params.tripID || null
+      CityID: this.props.match.params.CityID || null
     };
   }
 
@@ -34,8 +34,8 @@ class Signup extends Component {
           loggedIn: true,
           user: user
         });
-        if (this.state.tripID != null) {
-          this.addTrip()
+        if (this.state.CityID != null) {
+          this.addCity()
         }
         else {
           this.setState({
@@ -48,10 +48,10 @@ class Signup extends Component {
       });
   };
 
-  addTrip = () => {
-    const { tripID } = this.state;
-    AuthenticationServices.addTripService({
-      tripID
+  addCity = () => {
+    const { CityID } = this.state;
+    AuthenticationServices.addCityService({
+      CityID
     }).then(user => {
       this.setState({
         redirectTo: "/"

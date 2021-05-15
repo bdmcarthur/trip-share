@@ -1,5 +1,12 @@
 body {
   font-family: "Poppins", sans-serif;
+  color: rgb(64, 198, 207);
+}
+
+a:hover { text-decoration: none; } 
+svg{
+  font-size: 24px;
+  color: rgb(247 239 0);
 }
 
 .modal.and.carousel {
@@ -8,4 +15,122 @@ body {
 
 button:focus {
   outline: none;
+}
+
+.cityTitle{
+  font-family: 'Bungee Shade', cursive;
+  font-size: 90px;  
+}
+
+.logo .logo1, .logo .logo2,.logo .logo3{
+  font-family: 'Bungee Shade', cursive;  
+  font-size: 175px;
+  line-height: 175px;
+}
+
+.name {
+  font-size: .9rem;
+}
+.logo1, .logoYear h4{
+  color:rgb(245 0 136);
+}
+
+.logo2{
+  color:rgb(60 218 182);
+}
+
+.logo3{
+  color:rgb(216 191 10);
+  max-height: 100vh;
+}
+
+.modal1 {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.623); /* Black w/ opacity */
+  }
+
+  
+.content {
+  background-color: #fefefe;
+  margin: 8% auto; 
+  padding: 20px;
+  width: 70%;
+}
+
+.title { 
+font-family: 'Staatliches', cursive;
+}
+
+.article .url{
+  font-size: 13px;
+  font-family: 'Cousine', monospace;
+  color: gray;
+}
+
+.card1 {
+max-width: 31%;
+}
+
+.posts{
+  width: 85%;
+  margin: 0 auto;
+}
+
+.note{
+  background-color: rgb(247 239 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:325px;
+  border-radius: 40px;
+}
+
+.note h3{
+  font-family: 'Fjalla One', sans-serif; 
+  color: white;
+}
+
+.image img{
+  cursor: pointer;
+}
+
+/* font-family: 'Bebas Neue', cursive;
+font-family: 'Cousine', monospace;
+font-family: 'Fjalla One', sans-serif;
+font-family: 'Pathway Gothic One', sans-serif;
+font-family: 'Staatliches', cursive;
+font-family: 'Unica One', cursive; */
+
+/* relevant styles */
+.buttonWrap {
+  position: relative;
+}
+
+.buttonDesc {
+  position: absolute;
+  top: 10px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: gray;
+  visibility: hidden;
+  opacity: 0;
+  font-size: 10px;
+  transition: opacity .2s, visibility .2s;
+}
+
+.buttonWrap:hover .buttonDesc {
+  visibility: visible;
+  opacity: 1;
+}
+
+.text-light-grey {
+  color:rgb(133, 133, 133)
 }
