@@ -8,8 +8,9 @@ const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const passport = require("./passport");
+require('dotenv').config({ path: __dirname + '/../.env' });
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT;
 
 // Route requires
 const user = require("./routes/user");
