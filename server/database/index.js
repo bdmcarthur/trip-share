@@ -1,10 +1,8 @@
 //Connect to Mongo database
-require("dotenv").config();
+require('dotenv').config({ path: __dirname + '/../../.env' });
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-console.log("HELLLEO")
-console.log(process.env.DB_CONNECTION)
 const uri = process.env.DB_CONNECTION;
 const mongooseConnectionOptions = {
   useNewUrlParser: true,
