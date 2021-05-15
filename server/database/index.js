@@ -3,9 +3,9 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-//your local database url
-//27017 is the default mongoDB port
-const uri = process.env.CDB_CONNECTION;
+console.log("HELLLEO")
+console.log(process.env.DB_CONNECTION)
+const uri = process.env.DB_CONNECTION;
 const mongooseConnectionOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
