@@ -11,7 +11,7 @@ const passport = require("./passport");
 require('dotenv').config({ path: __dirname + '/../.env' });
 const app = express();
 const PORT = process.env.PORT;
-
+app.use(express.static(join(__dirname, "/client/build")));
 // Route requires
 const user = require("./routes/user");
 const city = require("./routes/city");
@@ -45,11 +45,11 @@ app.use(passport.session()); // calls the deserializeUser
 app.use("/user", user);
 app.use("/city", city);
 app.use("/post", post);
-// Express serve up index.html file if it doesn't recognize route
-  const path = require('path');
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
+
+app.get("*", (req, res, next) => {
+  res.sendFile(join(__dirname, "/client/build/index.html"));
+});
+
 // Starting Server
 app.listen(PORT, () => {
   console.log(`App listening on PORT: ${PORT}`);
