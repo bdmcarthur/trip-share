@@ -11,7 +11,7 @@ const passport = require("./passport");
 require('dotenv').config({ path: __dirname + '/../.env' });
 const app = express();
 const PORT = process.env.PORT;
-app.use(express.static(join(__dirname, "/client/build")));
+
 // Route requires
 const user = require("./routes/user");
 const city = require("./routes/city");
@@ -22,6 +22,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(join(__dirname, "/client/build")));
 
 // Sessions
 app.use(
