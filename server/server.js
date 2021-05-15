@@ -45,7 +45,11 @@ app.use(passport.session()); // calls the deserializeUser
 app.use("/user", user);
 app.use("/city", city);
 app.use("/post", post);
-
+// Express serve up index.html file if it doesn't recognize route
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
 // Starting Server
 app.listen(PORT, () => {
   console.log(`App listening on PORT: ${PORT}`);
