@@ -3,20 +3,19 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const session = require("express-session");
-const dbConnection = require("./database");
 const expressSession = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
-const passport = require("./passport");
+const passport = require("./server/passport");
 require('dotenv').config({ path: __dirname + '/../.env' });
 const app = express();
 const PORT = process.env.PORT;
 
 // Route requires
-const user = require("./routes/user");
-const city = require("./routes/city");
-const post = require("./routes/post");
+const user = require("./server/routes/user");
+const city = require("./server/routes/city");
+const post = require("./server/routes/post");
 
 // MIDDLEWARE
 app.use(morgan("dev"));
