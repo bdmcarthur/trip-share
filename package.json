@@ -27,7 +27,8 @@
   "scripts": {
     "start": "node server/server.js",
     "dev": "nodemon ./server/server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "build": "cd client && npm install --production=false && npm run build && cd ..",
+    "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
     "concurrently": "^5.0.1",
