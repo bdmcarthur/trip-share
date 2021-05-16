@@ -48,9 +48,8 @@ app.use("/user", user);
 app.use("/city", city);
 app.use("/post", post);
 
-app.get('*', function (req, res) {
-  const index = path.join(__dirname, 'build', 'index.html');
-  res.sendFile(index);
+app.get("*", (req, res, next) => {
+  res.sendFile(join(__dirname, "/client/build/index.html"));
 });
 
 // Starting Server
