@@ -49,7 +49,7 @@ app.use("/city", city);
 app.use("/post", post);
 
 app.get("*", (req, res, next) => {
-  res.sendFile(join(__dirname, "/client/build/index.html"));
+  res.sendFile(join(__dirname, "index.html"));
 });
 
 // Starting Server
